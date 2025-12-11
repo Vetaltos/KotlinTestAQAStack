@@ -1,5 +1,6 @@
 package test.base
 
+import io.qameta.allure.restassured.AllureRestAssured
 import test.RestReqFilter
 import io.restassured.RestAssured
 import io.restassured.builder.RequestSpecBuilder
@@ -19,7 +20,9 @@ open class BaseApiTest {
             RestAssured.baseURI = "https://jsonplaceholder.typicode.com"
 
             // Курл через RestReqFilter
-            RestAssured.filters(RestReqFilter())
+            RestAssured.filters(
+                AllureRestAssured(),
+                RestReqFilter())
 
             // Курл через CurlSupport
             RestAssured.config = CurlSupport.createConfig()

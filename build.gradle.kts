@@ -41,6 +41,7 @@ dependencies {
 
     // Hamcrest
     testImplementation("org.hamcrest:hamcrest:2.2")
+    testImplementation("io.qameta.allure:allure-hamcrest:2.30.0")
 }
 
 tasks.test {

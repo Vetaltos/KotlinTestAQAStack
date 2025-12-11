@@ -53,14 +53,14 @@ public class RestReqFilter implements Filter {
 
     // Собираем cURL
     private String createCurl(String method, String url, Headers headers, String body) {
-        StringBuilder curl = new StringBuilder(String.format("%ncurl --location --request %s %s \\\n", method, url));
+        StringBuilder curl = new StringBuilder(String.format("%ncurl --location --request %s %s", method, url));
 
         if (headers.size() > 1) {
-            headers.asList().forEach(h -> curl.append(String.format("--header '%s'\\\n",
+            headers.asList().forEach(h -> curl.append(String.format(" --header '%s'",
                     h.toString().replaceFirst("=", ":"))));
         }
         if (body != null && !body.isEmpty() && !body.isBlank() && !body.equals("null")) {
-            curl.append(String.format("--data-raw '%s'", body));
+            curl.append(String.format(" --data-raw '%s'", body));
         }
         return curl.toString();
     }

@@ -45,13 +45,25 @@ class RestAssuredAllureCurlTest : BaseApiTest() {
 
         // Step Request
         allureStep("Отправка POST запроса /posts") {
+            allureStep("Метод: POST") {}
             allureStep("JSON payload") {
                 Allure.addAttachment("Raw JSON payload", "application/json", requestBody)
             }
-            Assertions.assertEquals(201, response.statusCode, "Статус код не соответствует")
-            assertThat("Заголовок не соответствует", json.getString("title"), equalTo("foo"))
-            assertThat("Тело не соответствует",json.getString("body"), equalTo("bar"))
-            assertThat("Айди не соответствует", json.getString("userId"), equalTo("2"))
+            allureStep("Проверка статус кода") {
+                Assertions.assertEquals(201, response.statusCode, "Статус код не соответствует")
+            }
+            allureStep("Проверка: ") {
+                allureStep("Проверка заголовка") {
+                    assertThat("Проверка заголовка", json.getString("title"), equalTo("foo"))
+                }
+                allureStep("Проверка тела") {
+                    assertThat("Проверка тела", json.getString("body"), equalTo("bar"))
+                }
+                allureStep("Проверка айди") {
+                    assertThat("Проверка Айди", json.getString("userId"), equalTo("2"))
+                }
+            }
+
         }
     }
 
