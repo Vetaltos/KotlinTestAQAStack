@@ -14,11 +14,13 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.api.parallel.Execution
+import org.junit.jupiter.api.parallel.ExecutionMode
 import test.base.BaseApiTest
 import test.helper.CurlSupport
 import test.helper.allureStep
 
-
+@Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(AllureJunit5::class)
 class RestAssuredAllureCurlTest : BaseApiTest() {
 
@@ -38,6 +40,9 @@ class RestAssuredAllureCurlTest : BaseApiTest() {
         // Выполняем запрос
         val response = spec.post("/posts")
         val json = response.jsonPath()
+
+        println("Thread: ${Thread.currentThread().name}")
+
 
         // Добавляем в Allure
         Allure.addAttachment("POST Request: Стандартный вывод RA", "text/plain", output.toString())
@@ -71,6 +76,8 @@ class RestAssuredAllureCurlTest : BaseApiTest() {
     fun testGetCurlInAllure() {
         val id = 3
         val endpoint = "/posts/$id"
+
+        println("Thread: ${Thread.currentThread().name}")
 
         val output = ByteArrayOutputStream()
         val printStream = PrintStream(output)

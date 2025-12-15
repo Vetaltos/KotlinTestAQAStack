@@ -1,13 +1,13 @@
 package test.base
 
 import io.qameta.allure.restassured.AllureRestAssured
-import test.RestReqFilter
 import io.restassured.RestAssured
 import io.restassured.builder.RequestSpecBuilder
 import io.restassured.http.ContentType
 import io.restassured.specification.RequestSpecification
 import org.junit.jupiter.api.BeforeAll
 import test.helper.CurlSupport
+import test.helper.RestReqFilterKt
 
 open class BaseApiTest {
 
@@ -22,7 +22,10 @@ open class BaseApiTest {
             // Курл через RestReqFilter
             RestAssured.filters(
                 AllureRestAssured(),
-                RestReqFilter())
+                //RestReqFilter()
+                RestReqFilterKt()
+                )
+
 
             // Курл через CurlSupport
             RestAssured.config = CurlSupport.createConfig()
