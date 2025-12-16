@@ -1,4 +1,4 @@
-package test.helper
+package helper
 
 import com.github.dzieciou.testing.curl.CurlHandler
 import com.github.dzieciou.testing.curl.CurlRestAssuredConfigFactory
@@ -11,18 +11,21 @@ object CurlSupport {
     val curls = mutableListOf<String>()
 
     // Каждую сгенерированную команду кладем в список
-    val handler = object : CurlHandler {
-        override fun handle(curl: String?, options: Options?) {
-            if (!curl.isNullOrBlank()) {
-                curls.add(curl)
+    val handler =
+        object : CurlHandler {
+            override fun handle(
+                curl: String?,
+                options: Options?,
+            ) {
+                if (!curl.isNullOrBlank()) {
+                    curls.add(curl)
+                }
             }
         }
-    }
 
-    fun createConfig() : RestAssuredConfig =
-        CurlRestAssuredConfigFactory.createConfig(listOf(handler))
+    fun createConfig(): RestAssuredConfig = CurlRestAssuredConfigFactory.createConfig(listOf(handler))
 
-    fun getLastCurl() : String? = curls.lastOrNull()
+    fun getLastCurl(): String? = curls.lastOrNull()
 
     fun clear() {
         curls.clear()
